@@ -1,8 +1,20 @@
-var express = require("express");
+var express    = require("express");
+var mysql      = require('mysql');
 var app = express();
 
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'jonathansodamnho',
+  database : 'join_us'
+});
+
 app.get('/', function(req, res) {
-   res.send('Hello world!');
+   var q = 'SELECT COUNT(*) AS count FROM users';
+   connection.query(q, function (error, results) {
+      if (error) throw error;
+      var msg = 'We have ' + results[0].count + ' users';
+      res.send(msg);
+    });
 });
 
 app.get('/joke', function(req, res) {
@@ -18,3 +30,4 @@ app.get('/random_num', function(req, res) {
 app.listen(8080, function(){
     console.log('connection established');
 });
+
