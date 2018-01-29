@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
    connection.query(q, function (error, results) {
       if (error) throw error;
       var count = results[0].count;
-         res.render('home', {data: count});
+         res.render('home', {count: count});
     });
 });
 
